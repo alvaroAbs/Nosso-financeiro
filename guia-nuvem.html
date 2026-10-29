@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nosso Dinheiro — guia da conta e da nuvem</title>
+<style>
+:root{--bg:#0a0c14;--card:#141827;--line:rgba(255,255,255,.10);--txt:#eef1f8;--mut:#8f98b5;--pri:#7c5cff;--ok:#34d399}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:26px 16px 60px}
+.wrap{max-width:820px;margin:0 auto}
+h1{font-size:26px;letter-spacing:-.6px;margin:0 0 4px}
+h2{font-size:18px;margin:30px 0 8px;padding-top:10px;border-top:1px solid var(--line)}
+h3{font-size:15px;margin:18px 0 6px;color:#c9d2ef}
+p,li{color:#d9deed}
+.mut{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+ol,ul{padding-left:22px}
+code,pre{font-family:ui-monospace,Menlo,Consolas,monospace}
+code{background:#1b2033;padding:2px 6px;border-radius:6px;font-size:13px;color:#cfd7ff}
+pre{background:#0f1320;border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font-size:12.5px;color:#cfd7ff}
+.tag{display:inline-block;background:rgba(124,92,255,.18);color:#c9b8ff;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.ok{color:var(--ok)}
+.warn{background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.35);border-radius:12px;padding:13px 15px;margin:14px 0;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Conta, login e dados compartilhados</h1>
+<p class="mut">Nosso Dinheiro · versão 4.2 · guia rápido (10 a 15 minutos, tudo no plano grátis)</p>
+
+<div class="card">
+<span class="tag">o que muda</span>
+<p style="margin:10px 0 0">Antes, o app guardava tudo <b>só no navegador de um aparelho</b>. Agora existe uma <b>tela de entrada</b> e, com um projeto gratuito do Firebase, uma <b>casa compartilhada</b>: você e seu cônjuge entram cada um com o próprio e-mail e os dois veem e editam os mesmos dados, em qualquer celular ou computador.</p>
+<table>
+<tr><th>Modo</th><th>Serve para</th><th>Sincroniza entre aparelhos?</th></tr>
+<tr><td><b>Sem conta</b> (só neste aparelho)</td><td>testar rápido, usar sozinho</td><td>Não</td></tr>
+<tr><td><b>Conta + casa compartilhada</b></td><td>casal, dois celulares</td><td class="ok">Sim, em tempo real</td></tr>
+</table>
+<p class="mut" style="font-size:13px;margin:8px 0 0">O app nunca cria a sua conta do Firebase por você — esses passos são seus, no site do Google, e são gratuitos.</p>
+</div>
+
+<h2>1. Criar o projeto no Firebase (grátis)</h2>
+<ol>
+<li>Acesse <code>console.firebase.google.com</code> com a sua conta Google e clique em <b>Adicionar projeto</b>. Dê um nome (ex.: <i>nosso-dinheiro</i>) e conclua. O plano <b>Spark</b> é gratuito e suficiente.</li>
+<li>No menu lateral, abra <b>Authentication</b> → <b>Get started</b> → aba <b>Sign-in method</b> → ative <b>E-mail/senha</b> e salve.</li>
+<li>Abra <b>Firestore Database</b> → <b>Criar banco de dados</b> → escolha <b>Modo de produção</b> → localize a região (ex.: <i>southamerica-east1</i>) → criar.</li>
+<li>Clique no ícone <b>&lt;/&gt;</b> (Web) em “Seus apps”, registre o app e copie o bloco <code>firebaseConfig</code> que aparece.</li>
+</ol>
+
+<h2>2. Colar a configuração no app</h2>
+<ol>
+<li>Abra o app → aba <b>🔗 Compartilhar</b> → cartão <b>👤 Conta &amp; nuvem</b> → botão <b>☁️ Ativar nuvem</b>.</li>
+<li>Cole o <code>firebaseConfig</code> inteiro (com chaves e vírgulas) e clique em <b>Salvar configuração</b>.</li>
+<li>Volte para a tela de entrada: crie a sua conta com e-mail e senha e dê um nome à casa. Você recebe um <b>código de convite</b> tipo <code>CASAL-K7QM4821</code>.</li>
+</ol>
+
+<h2>3. Chamar a segunda pessoa</h2>
+<ol>
+<li>Mande o link do site + o <b>código de convite</b> para o seu cônjuge (WhatsApp serve).</li>
+<li>No aparelho dele(a): abrir o site → <b>Criar conta</b> com o e-mail dele(a) → na aba <b>Entrar</b>, usar <b>“já tenho um código de convite”</b> e colar o código.</li>
+<li>Pronto: a partir daí tudo que um lança aparece no outro em segundos (e o app mantém uma cópia offline no aparelho).</li>
+</ol>
+
+<h2>4. Regras de segurança do Firestore</h2>
+<p>Sem isso, qualquer pessoa com a chave do site poderia ler dados. No Firebase: <b>Firestore Database → Regras</b>, cole o bloco abaixo e publique.</p>
+<pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /casas/{casaId} {
+      // só quem está na lista de membros lê
+      allow read: if request.auth != null
+        && request.auth.uid in resource.data.membros;
+      // quem cria entra como membro
+      allow create: if request.auth != null
+        && request.auth.uid in request.resource.data.membros;
+      // membro atualiza; quem tem o código pode se adicionar aos membros
+      allow update: if request.auth != null
+        && (request.auth.uid in resource.data.membros
+            || request.auth.uid in request.resource.data.membros);
+      allow delete: if false;
+    }
+
+    match /usuarios/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}</pre>
+<p class="mut" style="font-size:13px">Com essas regras, apenas as duas contas da casa conseguem ler ou gravar os dados daquela casa. O código de convite deixa a segunda pessoa entrar uma única vez na lista de membros.</p>
+
+<h2>5. O que é o PIN (e o que ele não é)</h2>
+<div class="warn">
+<b>O PIN é só uma trava de privacidade do aparelho.</b> Ele impede que alguém que pegue o seu celular abra o app, e fica guardado apenas naquele navegador. Ele <b>não criptografa</b> os dados e <b>não substitui a senha</b> da conta. A segurança de verdade vem do login (Firebase Authentication) e das regras acima.
+</div>
+
+<h2>6. Rotina dos dois</h2>
+<ul>
+<li><b>Offline:</b> pode lançar sem internet; ao voltar a conexão, o app envia sozinho.</li>
+<li><b>Conflito:</b> se o aparelho tiver dados mais novos que a nuvem, o app pergunta qual manter (enviar os meus ou usar os da nuvem).</li>
+<li><b>Recibos grandes:</b> acima de ~800 KB o envio à nuvem deixa as fotos só no aparelho, para não estourar o limite gratuito; o resto dos dados sincroniza normal.</li>
+<li><b>Sair:</b> cartão da conta → <b>Sair da conta</b>. O app volta para a tela de entrada.</li>
+<li><b>Sem nuvem:</b> o botão “Usar só neste aparelho” continua existindo — nada do que você já tinha foi perdido.</li>
+</ul>
+
+<h2>7. Problemas comuns</h2>
+<table>
+<tr><th>Mensagem</th><th>O que fazer</th></tr>
+<tr><td>“Nuvem não configurada”</td><td>Falta colar o <code>firebaseConfig</code> (passo 2).</td></tr>
+<tr><td>“Ative E-mail/senha no Firebase Authentication”</td><td>Authentication → Sign-in method → ativar E-mail/senha.</td></tr>
+<tr><td>“A nuvem negou o acesso”</td><td>Regras do Firestore não publicadas (passo 4) ou você não está na lista de membros — use o código de convite.</td></tr>
+<tr><td>“Código não encontrado”</td><td>Confira as letras/números (o código não tem O nem 0 ambíguos); peça para o outro abrir o cartão da conta e copiar de novo.</td></tr>
+<tr><td>Dados não aparecem no outro celular</td><td>Confirme que os dois estão na mesma casa (mesmo código de convite) e toque em <b>🔄 Sincronizar agora</b>.</td></tr>
+</table>
+
+<p class="mut" style="margin-top:28px;font-size:12.5px">Nosso Dinheiro 4.2 · funciona como site estático em qualquer hospedagem HTTPS (Netlify, GitHub Pages, Cloudflare Pages).</p>
+</div>
+</body>
+</html>
