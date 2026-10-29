@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7c5cff">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nosso Dinheiro">
+<meta name="description" content="Controle financeiro do casal: calendário de contas, parcelados, recibos e metas.">
+<title>Nosso Dinheiro — finanças do casal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-tema="escuro">
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">₵</div>
+      <div><h1>Nosso Dinheiro</h1><span id="casalNome">nosso controle financeiro</span></div>
+    </div>
+    <div class="top-actions">
+      <button class="btn sm pri" data-act="novoDesp">＋ Lançamento</button>
+      <button class="btn sm" data-act="calCompleto">📅 Mês completo</button>
+      <span class="quando" id="stampInicio" title="última atualização dos dados"></span>
+      <button class="btn sm gh" data-act="instalarPwa">📲 Instalar app</button>
+      <button class="btn sm gh" data-act="tema">☀️ Claro</button>
+    </div>
+  </header>
+
+  <nav class="mesnav">
+    <button class="round" data-act="mesPrev" title="mês anterior">◀</button>
+    <button class="mesLabel" data-act="calCompleto" title="abrir o calendário completo do mês">
+      <strong id="mesNome">—</strong><small id="mesSub">—</small><span class="hint">👆 toque para abrir o calendário completo</span>
+    </button>
+    <button class="round" data-act="mesHoje" title="voltar para hoje">Hoje</button>
+    <button class="round" data-act="mesNext" title="próximo mês">▶</button>
+  </nav>
+
+  <nav class="tabs" id="tabs">
+    <button data-page="calendario" class="on">📅 Calendário</button>
+    <button data-page="resumo">📊 Resumo</button>
+    <button data-page="lanc">🧾 Lançamentos</button>
+    <button data-page="fixas">🔁 Contas fixas</button>
+    <button data-page="parc">💳 Parcelados</button>
+    <button data-page="recibos">📎 Recibos</button>
+    <button data-page="metas">🎯 Metas</button>
+    <button data-page="acerto">🤝 Acerto</button>
+    <button data-page="share">🔗 Compartilhar</button>
+  </nav>
+
+  <main id="main"></main>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal"><div class="modalCard"><button class="modalX" data-act="fecharModal">✕</button><div id="modalBody"></div></div></div>
+<input type="file" id="fileImport" accept=".json,application/json" hidden>
+
+<script src="libs/xlsx.full.min.js"></script>
+<script src="libs/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
